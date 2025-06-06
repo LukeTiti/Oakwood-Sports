@@ -3,6 +3,20 @@ name: Add Game to Games.json
 on:
   workflow_dispatch:
     inputs:
+      # your inputs here...
+
+permissions:
+  contents: write  # <-- ADD THIS
+
+jobs:
+  add-game:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      # rest of your steps...
+
+  workflow_dispatch:
+    inputs:
       sport:
         description: "Sport"
         required: true
