@@ -1,0 +1,76 @@
+name: Add Game to Games.json
+
+on:
+  workflow_dispatch:
+    inputs:
+      sport:
+        description: "Sport"
+        required: true
+        default: "basketball"
+      date:
+        description: "Date (e.g. 2025-06-06T18:00:00Z)"
+        required: true
+      team:
+        description: "Team"
+        required: true
+      opponent:
+        description: "Opponent"
+        required: true
+      home:
+        description: "Is it a home game?"
+        required: true
+        type: boolean
+      homeScore:
+        description: "Home Score"
+        required: true
+      awayScore:
+        description: "Away Score"
+        required: true
+      quarterScores:
+        description: "Quarter Scores (comma separated)"
+        required: true
+        default: "20,20,20,20"
+
+jobs:
+  add-game:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Format new game
+        run: |
+          echo "Creating new game JSON..."
+          jq -n \
+            --arg sport "${{ github.event.inputs.sport }}" \
+            --arg date "${{ github.event.inputs.date }}" \
+            --arg team "${{ github.event.inputs.team }}" \
+            --arg opponent "${{ github.event.inputs.opponent }}" \
+            --argjson home ${{ github.event.inputs.home }} \
+            --argjson homeScore "${{ github.event.inputs.homeScore }}" \
+            --argjson awayScore "${{ github.event.inputs.awayScore }}" \
+            --arg quarterScores "${{ github.event.inputs.quarterScores }}" \
+            '{
+              "sport": $sport,
+              "date": $date,
+              "team": $team,
+              "opponent": $opponent,
+              "home": $home,
+              "score": {
+                "home": $homeScore,
+                "away": $awayScore,
+                "quarterScores": ($quarterScores | split(",") | map(tonumber))
+              }
+            }' > new_Game.json
+
+      - name: Merge into Games.json
+        run: |
+          if [ ! -f games.json ]; then echo "[]" > games.json; fi
+          jq -s '.[0] + [.[1]]' games.json new_game.json > tmp.json && mv tmp.json games.json
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add Games.json
+          git commit -m "Add game: ${{ github.event.inputs.team }} vs ${{ github.event.inputs.opponent }}"
+          git push
