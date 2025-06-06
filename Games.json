@@ -83,5 +83,22 @@
         20
       ]
     }
+  },
+  {
+    "sport": "basketball",
+    "date": "2025-06-06T18:00:00Z",
+    "team": "Test",
+    "opponent": "Opp Test",
+    "home": false,
+    "score": {
+      "home": 1,
+      "away": 1,
+      "quarterScores": [
+        20,
+        20,
+        20,
+        20
+      ]
+    }
   }
 ]
