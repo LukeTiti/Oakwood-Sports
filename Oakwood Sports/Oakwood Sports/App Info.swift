@@ -10,24 +10,20 @@ class AppInfo: ObservableObject {
     @Published var games: [Game] = []
 
     func loadGames() {
-        guard let url = URL(string: "https://github.com/LukeTiti/Oakwood-Sports/raw/refs/heads/main/Games.json") else {
+        guard let url = URL(string: "https://raw.githubusercontent.com/LukeTiti/Oakwood-Sports/refs/heads/main/Games.json") else {
             print("Invalid URL")
             return
         }
 
         let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601  // If your JSON date uses ISO8601 format
+        decoder.dateDecodingStrategy = .iso8601
 
         URLSession.shared.dataTask(with: url) { data, _, error in
             if let data = data {
                 do {
-                    // Decode a single Game, not an array
-                    let game = try decoder.decode(Game.self, from: data)
+                    let games = try decoder.decode([Game].self, from: data)
                     DispatchQueue.main.async {
-                        // Append to your games array or replace it
-                        self.games.append(game)
-                        // Or if you want to replace the array:
-                        // self.games = [game]
+                        self.games = games
                     }
                 } catch {
                     print("JSON decode error: \(error)")
