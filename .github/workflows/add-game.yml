@@ -60,12 +60,12 @@ jobs:
                 "away": $awayScore,
                 "quarterScores": ($quarterScores | split(",") | map(tonumber))
               }
-            }' > new_Game.json
+            }' > new_game.json
 
       - name: Merge into Games.json
         run: |
-          if [ ! -f games.json ]; then echo "[]" > games.json; fi
-          jq -s '.[0] + [.[1]]' games.json new_game.json > tmp.json && mv tmp.json games.json
+          if [ ! -f Games.json ]; then echo "[]" > Games.json; fi
+          jq -s '.[0] + [.[1]]' Games.json new_game.json > tmp.json && mv tmp.json Games.json
 
       - name: Commit changes
         run: |
