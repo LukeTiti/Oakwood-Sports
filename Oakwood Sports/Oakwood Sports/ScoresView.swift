@@ -8,8 +8,25 @@
 
 import SwiftUI
 
-struct HomeView: View {
+struct ScoresView: View {
+    @EnvironmentObject var appInfo: AppInfo
+
     var body: some View {
-        Text("Hello, World!")
+        NavigationView {
+            List(appInfo.games, id: \.id) { game in
+                HStack {
+                    Text("\(game.team)")
+                    Text("\(game.score.home) -")
+                    Text("\(game.score.away)")
+                    Text("\(game.opponent)")
+                }
+            }
+            .navigationTitle("Games")
+            .onAppear {
+                if appInfo.games.isEmpty {
+                    appInfo.loadGames()
+                }
+            }
+        }
     }
 }

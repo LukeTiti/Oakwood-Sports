@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct HomeView: View {
+struct NewsView: View {
     var body: some View {
         Text("Hello, World!")
     }
