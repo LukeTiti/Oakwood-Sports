@@ -1,4 +1,5 @@
-{
+[
+  {
     "sport": "basketball",
     "date": "2025-06-05T10:00:00Z",
     "team": "Boys JV",
@@ -9,4 +10,42 @@
       "away": 79,
       "quarterScores": [20, 20, 30, 10]
     }
+  },
+  {
+    "sport": "basketball",
+    "date": "2025-06-06T10:00:00Z",
+    "team": "Boys Varsity",
+    "opponent": "Alisal",
+    "home": false,
+    "score": {
+      "home": 60,
+      "away": 70,
+      "quarterScores": [15, 20, 10, 15]
+    }
+  },
+  {
+    "sport": "basketball",
+    "date": "2025-06-06T10:00:00Z",
+    "team": "Girls Varsity",
+    "opponent": "Fremont",
+    "home": false,
+    "score": {
+      "home": 40,
+      "away": 30,
+      "quarterScores": [15, 20, 10, 15]
+    }
+  },
+  {
+    "sport": "basketball",
+    "date": "2025-06-06T10:00:00Z",
+    "team": "MS Boys",
+    "opponent": "CSMH",
+    "home": true,
+    "score": {
+      "home": 50,
+      "away": 40,
+      "quarterScores": [15, 20, 10, 15]
+    }
   }
+]
+
